@@ -20,6 +20,13 @@ $ go get -u -v github.com/deis/deis
 $ cd $GOPATH/src/github.com/deis/deis/tests
 ```
 
+Install the `go vet` and `golint` tools to run source code checks on the
+the tests themselves:
+```console
+$ go get code.google.com/p/go.tools/cmd/vet
+$ go get github.com/golang/lint/golint
+```
+
 Provision a Deis cluster as usual, and ensure that a matching `deis`
 command-line client is available in your `$PATH`.
 

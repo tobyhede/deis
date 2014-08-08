@@ -1,10 +1,10 @@
 test: test-smoke
 
-test-smoke:
+test-smoke: test-style
 	GOPATH=$(CURDIR)/_vendor:$(GOPATH) \
 		go test -tags integration -short -v -run TestSmoke
 
-test-full:
+test-full: test-style
 	GOPATH=$(CURDIR)/_vendor:$(GOPATH) \
 		go test -tags integration -v -run TestGlobal
 	GOPATH=$(CURDIR)/_vendor:$(GOPATH) \
@@ -25,6 +25,10 @@ test-full:
 		go test -tags integration -v -run TestPs
 	GOPATH=$(CURDIR)/_vendor:$(GOPATH) \
 		go test -tags integration -v -run TestReleases
+
+test-style:
+	go vet -x ./...
+	golint *.go dockercli etcdutils mock utils
 
 nuke_from_orbit:
 	-docker kill `docker ps -q`
