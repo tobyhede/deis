@@ -6,89 +6,25 @@
 Coding Standards
 ================
 
-Deis is a Python_ and Go_ project.
+Deis is a Go_ and Python_ project (with some shell scripts
+and Makefiles). In the spirit of those programming languages, Deis
+code should be simple rather than clever. An open source project
+benefits from many eyes upon it, so readability counts.
 
-We chose Go_ because it is simple, reliable, and efficient. These are
-values Deis shares. Go also excels at programming systems-level tasks,
-with powerful and simple networking, concurrency, and testing facilities
-included. Our coding standards and recommendations for Go code in the
-Deis project are evolving, but will be added to this document soon.
+Proposed changes to Deis should be discrete, self-contained, and
+ideally small units. It may seem convenient just to fix that bug
+you found while you were implementing a feature, but both changes
+are more likely to be accepted if they are presented as separate
+pull requests.
 
-We chose Python_ over other compelling languages because it is
-widespread, well-documented, and friendly to a large number of
-developers. Source code benefits from many eyes upon it.
+Pull Request Checklist
+----------------------
 
-`The Zen of Python`_ emphasizes simple over clever, and we agree.
-Readability counts. Deis also aims for complete test coverage.
-
-Contributors to Deis should feel welcome to make changes to any part
-of the codebase. To create a proper GitHub pull request for inclusion
-into the official repository, your code must pass two tests:
-
-- :ref:`make_flake8`
-- :ref:`make_coverage`
-
-
-.. _make_flake8:
-
-``make flake8``
----------------
-
-`flake8`_ is a helpful command-line tool that combines the output of
-`pep8 <pep8_tool_>`_, `pyflakes`_, and `mccabe`_.
-
-.. code-block:: console
-
-    $ make -C controller flake8
-    flake8
-
-No output, as above, means ``flake8`` found no errors. If errors
-are reported, fix them in your source code and try ``flake8`` again.
-
-The Deis project adheres to `PEP8`_, the python code style guide,
-with the exception that we allow lines up to 99 characters in length.
-Docstrings and tests are also required for all public methods, although
-``flake8`` does not enforce this.
-
-Default settings for ``flake8`` are in the ``[flake8]`` section of the
-setup.cfg file in the project root.
-
-
-.. _make_coverage:
-
-``make coverage``
------------------
-
-Once your code passes the style checker, run the test suite and
-ensure that everything passes and that code coverage has not declined.
-
-.. code-block:: console
-
-    $ make -C controller coverage
-    coverage run manage.py test --noinput api web
-    WARNING Cannot synchronize with etcd cluster
-    Creating test database for alias 'default'...
-    ...............................................
-    ----------------------------------------------------------------------
-    Ran 47 tests in 47.768s
-
-    OK
-    Destroying test database for alias 'default'...
-    coverage html
-
-If a test fails, fixing it is obviously the first priority. And if you
-have introduced new code, it must be accompanied by unit tests.
-
-In the example above, all tests passed and ``coverage`` created a report
-of what code was exercised while the tests were running. Open the file
-``htmlcov/index.html`` under the project's root and ensure that the
-overall coverage percentage has not receded as a result of your
-changes. Current test coverage can be found here:
-
-.. image:: https://coveralls.io/repos/deis/deis/badge.png?branch=master
-    :target: https://coveralls.io/r/deis/deis?branch=master
-    :alt: Coverage Status
-
+1. Code changes address exactly one issue
+2. Git commit message(s) are in Deis' required format
+3. Includes documentation (docs/ dir and/or README.md files)
+4. Code comments added or updated
+5. Tests all passed
 
 .. _pull_request:
 
@@ -317,12 +253,11 @@ Examples
 
     closes #392
 
-Forcing no Build for TravisCI
-"""""""""""""""""""""""""""""
+Forcing no Build for Jenkins
+""""""""""""""""""""""""""""
 
 If you're committing a PR that is just a small typo fix or a README change, you can force
-TravisCI to not build your commit by adding [skip ci] below the message body. For example:
-
+Jenkins not to build your commit by adding [skip ci] below the message body. For example:
 .. code-block:: console
 
     fix(README): typo
